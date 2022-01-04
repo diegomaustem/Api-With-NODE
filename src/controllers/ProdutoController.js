@@ -19,7 +19,7 @@ module.exports = {
         }
         response.json(json)
     }, 
-    
+
     listarProduto: async (require, response)=>{
         let json = {error:'', result:{}}
 
@@ -31,7 +31,36 @@ module.exports = {
         }
         response.json(json)
 
-    }
+    },
+
+    inserirProduto: async (require, response)=>{
+        let json = {error:'', result:{}};
+
+        let nome      = require.body.nome
+        let imagem    = require.body.imagem
+        let descricao = require.body.descricao
+        let estoque   = require.body.estoque
+        let status    = require.body.status
+        let preco     = require.body.preco
+
+        if(nome && descricao && estoque && preco){
+            let produto = await ProdutoService.inserirProduto(nome, imagem, descricao, estoque, status, preco)
+            json.result = {
+                id: produto, 
+                nome,
+                imagem,
+                descricao,
+                estoque,
+                status,
+                preco
+            };
+        }else{
+            json.error = 'Campos não enviados!'
+        }
+
+        response.json(json)
+
+    },
 }
 
 

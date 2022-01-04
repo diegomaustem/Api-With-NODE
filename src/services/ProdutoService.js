@@ -10,6 +10,7 @@ module.exports = {
             })
         })
     },
+
     listarProduto: (id) => {
         return new Promise((aceito, rejeitado) =>{
 
@@ -22,5 +23,19 @@ module.exports = {
                     }
                 })
              })
+    },
+
+    inserirProduto: (nome, imagem, descricao, estoque, status, preco) => {
+        return new Promise((aceito, rejeitado) =>{
+
+            db.query(
+                'INSERT INTO produtos (nome, imagem, descricao, estoque, status, preco) VALUES (?,?,?,?,?,?)',
+                [nome, imagem, descricao, estoque, status, preco], 
+                (error, results)=>{
+                    if(error) { rejeitado(error); return; }
+                        aceito(results.insertId)
+                }
+            )
+        })
     }
 };
