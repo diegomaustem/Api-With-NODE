@@ -1,7 +1,7 @@
 const ProdutoService = require('../services/ProdutoService')
 
 module.exports = {
-    listarTodos: async (require, response)=> {
+    listarTodos: async (require, response) => {
         let json = {error:'', result:[]}
 
         let produtos = await ProdutoService.listarTodos();
@@ -20,7 +20,7 @@ module.exports = {
         response.json(json)
     }, 
 
-    listarProduto: async (require, response)=>{
+    listarProduto: async (require, response) =>{
         let json = {error:'', result:{}}
 
         let id = require.params.id
@@ -33,7 +33,7 @@ module.exports = {
 
     },
 
-    inserirProduto: async (require, response)=>{
+    inserirProduto: async (require, response) =>{
         let json = {error:'', result:{}};
 
         let nome      = require.body.nome
@@ -47,6 +47,36 @@ module.exports = {
             let produto = await ProdutoService.inserirProduto(nome, imagem, descricao, estoque, status, preco)
             json.result = {
                 id: produto, 
+                nome,
+                imagem,
+                descricao,
+                estoque,
+                status,
+                preco
+            };
+        }else{
+            json.error = 'Campos não enviados!'
+        }
+
+        response.json(json)
+
+    },
+
+    alterarProduto: async (require, response) =>{
+        let json = {error:'', result:{}};
+
+        let id        = require.params.id
+        let nome      = require.body.nome
+        let imagem    = require.body.imagem
+        let descricao = require.body.descricao
+        let estoque   = require.body.estoque
+        let status    = require.body.status
+        let preco     = require.body.preco
+
+        if(id && nome && descricao && estoque && preco){
+           await ProdutoService.alterarProduto(id, nome, imagem, descricao, estoque, status, preco)
+            json.result = {
+                id, 
                 nome,
                 imagem,
                 descricao,

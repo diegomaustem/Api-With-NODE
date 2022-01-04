@@ -37,5 +37,19 @@ module.exports = {
                 }
             )
         })
+    },
+
+    alterarProduto: (id, nome, imagem, descricao, estoque, status, preco) => {
+        return new Promise((aceito, rejeitado) =>{
+
+            db.query(
+                'UPDATE produtos SET nome = ?, imagem = ? , descricao = ?, estoque = ? , status = ?, preco = ? WHERE id = ?',
+                [id, nome, imagem, descricao, estoque, status, preco], 
+                (error, results) => {
+                    if(error) { rejeitado(error); return; }
+                        aceito(results)
+                }
+            )
+        })
     }
 };
