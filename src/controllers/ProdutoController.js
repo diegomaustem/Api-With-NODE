@@ -91,6 +91,16 @@ module.exports = {
         response.json(json)
 
     },
+
+    excluirProduto: async (require, response) =>{
+        
+        let json = {error:'', result:{}};
+
+        await ProdutoService.excluirProduto(require.params.id)
+
+        response.json(json)
+
+    },
 }
 
 

@@ -8,6 +8,7 @@ router.get('/produtos', ProdutoController.listarTodos)
 router.get('/produto/:id', ProdutoController.listarProduto)
 router.post('/produto', ProdutoController.inserirProduto)
 router.put('/produto/:id', ProdutoController.alterarProduto)
+router.delete('/produto/:id', ProdutoController.excluirProduto)
 
 
 module.exports = router;
